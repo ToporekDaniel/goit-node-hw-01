@@ -1,9 +1,40 @@
 const contacts = require("./contacts.js");
+require("colors");
 
-// contacts.getContactById("rsKkOQUi80UsgVPCcLZZW");
+const { Command } = require("commander");
+const program = new Command();
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
 
-// contacts.removeContact("rsKkOQUi80UsgVPCcLZZW");
+program.parse(process.argv);
 
-// contacts.addContact("Ala Makota", "alamakota@email.com", "123123132");
+const argv = program.opts();
 
-// contacts.listContacts();
+function invokeAction({ action, id, name, email, phone }) {
+  switch (action) {
+    case "list":
+      contacts.listContacts();
+      break;
+
+    case "get":
+      contacts.getContactById(id);
+      break;
+
+    case "add":
+      contacts.addContact(name, email, phone);
+      break;
+
+    case "remove":
+      contacts.removeContact(id);
+      break;
+
+    default:
+      console.warn("\x1B[31m Unknown action type!");
+  }
+}
+
+invokeAction(argv);
