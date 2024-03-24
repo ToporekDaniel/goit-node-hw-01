@@ -8,7 +8,11 @@ const contactsPath = path.join(__dirname, "db", "contacts.json");
 
 function listContacts() {
   fs.readFile(contactsPath)
-    .then((data) => console.log("All contacts: ".blue, JSON.parse(data)))
+    .then((data) => {
+      const contacts = JSON.parse(data);
+      console.log("All contacts:".blue);
+      console.table(contacts);
+    })
     .catch((err) => console.log(err.message));
 }
 
