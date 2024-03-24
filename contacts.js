@@ -56,7 +56,6 @@ function addContact(name, email, phone) {
       fs.writeFile(contactsPath, JSON.stringify(contactList, null, 2)).then(
         () => {
           getContactById(newContact.id);
-          console.log("was successfully added to the list.".blue);
         }
       );
     })
